@@ -77,7 +77,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="billfield:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="gvG-xL-dG9"/>
                                     <action selector="updateTotal:" destination="BYZ-38-t0r" eventType="editingChanged" id="lEb-8w-Hig"/>
                                 </connections>
                             </textField>
@@ -91,7 +90,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Tipster" id="rVa-3U-ZEL"/>
                     <connections>
-                        <outlet property="billField" destination="ZTD-VS-wVd" id="BdX-WA-1ZI"/>
+                        <outlet property="billField" destination="ZTD-VS-wVd" id="L3z-b6-tg1"/>
                         <outlet property="tipLabel" destination="Raz-EE-ghn" id="eXB-jB-uBB"/>
                         <outlet property="tipSegCtrl" destination="gMu-QP-mPZ" id="0fR-IF-xZ3"/>
                         <outlet property="totalLabel" destination="A34-7r-3ih" id="JyS-i4-f7W"/>
