@@ -8,10 +8,17 @@
 #import "TipViewController.h"
 
 @interface TipViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *billField;
+@property (weak, nonatomic) IBOutlet UILabel *tipLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *tipSegCtrl;
 
 @end
 
 @implementation TipViewController
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -20,6 +27,17 @@
 - (IBAction)onTap:(id)sender {
     NSLog(@"Tapped");
     [self.view endEditing:true];
+}
+- (IBAction)updateTotal:(id)sender {
+    double tipPercentages[] = {0.10, 0.15, 0.20};
+    double selectedTipPercent = tipPercentages[self.tipSegCtrl.selectedSegmentIndex];
+    
+    double billPreTip=self.billField.text.doubleValue;
+    double tipAmount = selectedTipPercent * billPreTip;
+    double totalAmount = tipAmount + billPreTip;
+    
+    self.tipLabel.text = [NSString stringWithFormat:@"$%.2f", tipAmount];
+    self.totalLabel.text = [NSString stringWithFormat:@"$%.2f", totalAmount];
 }
 
 /*
