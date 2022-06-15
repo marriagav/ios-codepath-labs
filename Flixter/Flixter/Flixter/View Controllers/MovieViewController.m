@@ -6,6 +6,7 @@
 //
 
 #import "MovieViewController.h"
+#import "MovieCell.h"
 
 @interface MovieViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSArray *movieArray;
@@ -55,10 +56,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:
     (NSIndexPath *)indexPath{
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    MovieCell *cell = [tableView
+                            dequeueReusableCellWithIdentifier: @"MovieCell"];
     
     NSDictionary *movie = self.movieArray[indexPath.row];
-    cell.textLabel.text = movie[@"title"];
+    cell.titleLabel.text = movie[@"title"];
+    cell.synopsisLabel.text=movie[@"overview"];
     
     return cell;
 }
