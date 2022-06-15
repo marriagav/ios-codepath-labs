@@ -104,13 +104,12 @@
 		D4B5BFB3285A4CBB006CEAD8 /* Flixter */ = {
 			isa = PBXGroup;
 			children = (
+				D4B5BFEC285A7282006CEAD8 /* View Controllers */,
 				D4B5BFB4285A4CBB006CEAD8 /* AppDelegate.h */,
 				D4B5BFB5285A4CBB006CEAD8 /* AppDelegate.m */,
 				D4B5BFB7285A4CBB006CEAD8 /* SceneDelegate.h */,
 				D4B5BFB8285A4CBB006CEAD8 /* SceneDelegate.m */,
 				D4B5BFBD285A4CBB006CEAD8 /* Main.storyboard */,
-				D4B5BFE9285A5B7C006CEAD8 /* MovieViewController.h */,
-				D4B5BFEA285A5B7C006CEAD8 /* MovieViewController.m */,
 				D4B5BFC0285A4CBD006CEAD8 /* Assets.xcassets */,
 				D4B5BFC2285A4CBD006CEAD8 /* LaunchScreen.storyboard */,
 				D4B5BFC5285A4CBD006CEAD8 /* Info.plist */,
@@ -134,6 +133,15 @@
 				D4B5BFDC285A4CBD006CEAD8 /* FlixterUITestsLaunchTests.m */,
 			);
 			path = FlixterUITests;
+			sourceTree = "<group>";
+		};
+		D4B5BFEC285A7282006CEAD8 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D4B5BFE9285A5B7C006CEAD8 /* MovieViewController.h */,
+				D4B5BFEA285A5B7C006CEAD8 /* MovieViewController.m */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
