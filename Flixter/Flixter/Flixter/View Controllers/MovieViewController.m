@@ -32,9 +32,17 @@
 }
 
 - (void)fetchMovies {
+    
+    // 1 - create url
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
+    
+    // 2 - create request
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
+    
+    // 3 - create session
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    
+    // 4 - create our session task
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
            if (error != nil) {
                NSLog(@"%@", [error localizedDescription]);
@@ -56,18 +64,20 @@
            }
         [self.refreshControl endRefreshing];
        }];
+    
+    // 5 - resume the task
     [task resume];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:
-(NSInteger)section{
-    return self.movieArray.count;
-}
+    (NSInteger)section{
+        return self.movieArray.count;
+    }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:
     (NSIndexPath *)indexPath{
     MovieCell *cell = [tableView
-                            dequeueReusableCellWithIdentifier: @"MovieCell"];
+    dequeueReusableCellWithIdentifier: @"MovieCell"];
     
     NSDictionary *movie = self.movieArray[indexPath.row];
     cell.titleLabel.text = movie[@"title"];
