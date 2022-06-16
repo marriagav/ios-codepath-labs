@@ -8,6 +8,7 @@
 #import "MovieViewController.h"
 #import "MovieCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "DetailsViewController.h"
 
 @interface MovieViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSArray *movieArray;
@@ -101,6 +102,14 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
+    
+    NSLog(@"%@", sender);
+    NSIndexPath *myIndexPath=self.tableView.indexPathForSelectedRow;
+
+    NSDictionary *dataToPass = self.movieArray[myIndexPath.row];
+    DetailsViewController *detailVC = [segue destinationViewController];
+    //detailVC.detailDict = dataToPass;
+    detailVC.detailDict = dataToPass;
 }
 
 @end
