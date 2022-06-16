@@ -6,6 +6,7 @@
 //
 
 #import "DetailsViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface DetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *descriptionTitle;
@@ -21,6 +22,15 @@
     // Do any additional setup after loading the view.
     self.descriptionTitle.text=self.detailDict[@"title"];
     self.descriptionSynapsis.text=self.detailDict[@"overview"];
+    
+    
+    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
+    NSString *posterURLString = self.detailDict[@"poster_path"];
+    NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+    
+    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+    self.descriptionImage.image=nil;
+    [self.descriptionImage setImageWithURL:posterURL];
 }
 
 /*
