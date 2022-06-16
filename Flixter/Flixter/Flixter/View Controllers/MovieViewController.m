@@ -14,13 +14,17 @@
 @property (nonatomic, strong) NSArray *movieArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
 @implementation MovieViewController
 
 - (void)viewDidLoad {
+    
+    
     [super viewDidLoad];
+    
     
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
@@ -45,10 +49,27 @@
     
     // 4 - create our session task
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        // Start the activity indicator
+        [self.activityIndicator startAnimating];
            if (error != nil) {
+               [self.activityIndicator stopAnimating];
+               
+               UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Cannot Get Movies"
+                    message:[error localizedDescription]
+                  preferredStyle:UIAlertControllerStyleAlert];
+               
+               UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault
+                    handler:^(UIAlertAction * action) {
+                        [self fetchMovies];
+                     }];
+               
+               [alert addAction:defaultAction];
+               [self presentViewController:alert animated:YES completion:nil];
+               
                NSLog(@"%@", [error localizedDescription]);
            }
            else {
+               [self.activityIndicator stopAnimating];
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
 
                
@@ -63,11 +84,17 @@
                [self.tableView reloadData];
                
            }
+        
         [self.refreshControl endRefreshing];
+        
+        
        }];
+    
+    
     
     // 5 - resume the task
     [task resume];
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:

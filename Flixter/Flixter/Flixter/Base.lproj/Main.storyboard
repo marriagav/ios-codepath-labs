@@ -61,12 +61,17 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" id="ndy-RK-TgV">
+                                <rect key="frame" x="0.0" y="382" width="414" height="132"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="D6g-Ls-l8Y" userLabel="Navigation Item"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="ndy-RK-TgV" id="q2P-Dx-dGi"/>
                         <outlet property="tableView" destination="tor-B3-bTF" id="LLi-gk-GNr"/>
                     </connections>
                 </viewController>
