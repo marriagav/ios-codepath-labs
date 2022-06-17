@@ -12,6 +12,8 @@
 @interface GridViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray *movieArray;
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
+
 
 @end
 
@@ -87,6 +89,15 @@
     [cell.posterImage setImageWithURL:posterURL];
 
     return cell;
+}
+
+- (void)viewDidLayoutSubviews {
+   [super viewDidLayoutSubviews];
+//    programmatically set the flowlayout settings
+    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    self.flowLayout.minimumLineSpacing = 3;
+    self.flowLayout.minimumInteritemSpacing = 3;
+    self.flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 25);
 }
 
 /*
