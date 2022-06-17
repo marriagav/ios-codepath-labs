@@ -22,6 +22,7 @@
     // Do any additional setup after loading the view.
     self.collectionView.dataSource = self;
     self.collectionView.delegate=self;
+    [self fetchMovies];
     
 }
 
@@ -71,12 +72,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-//    PosterCell *cell = [collectionView
-//    dequeueReusableCellWithIdentifier: @"posterImageCell"];
+    PosterCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"posterImageCell" forIndexPath:indexPath];
     
     NSDictionary *movie = self.movieArray[indexPath.row];
-    
-    PosterCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"posterImageCell" forIndexPath:self.movieArray[indexPath.item]];
 
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
 
@@ -84,7 +82,7 @@
     NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
 
     NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
-    cell.posterImage=nil;
+    cell.posterImage.image=nil;
     [cell.posterImage setImageWithURL:posterURL];
 
     return cell;
