@@ -21,16 +21,15 @@
 @implementation MovieViewController
 
 - (void)viewDidLoad {
-    
-    
     [super viewDidLoad];
-    
-    
+    // Assigning delegate and dataSource elements for the CollectionView to self
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
     
+    //    Get all the movies
     [self fetchMovies];
     
+//    initalize the refresh control and insert it
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
@@ -52,12 +51,16 @@
         // Start the activity indicator
         [self.activityIndicator startAnimating];
            if (error != nil) {
+//               in case of connection error
+//               stop activity indicator in both cases
                [self.activityIndicator stopAnimating];
                
+//               alert error to the user
                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Cannot Get Movies"
                     message:[error localizedDescription]
                   preferredStyle:UIAlertControllerStyleAlert];
                
+//               default action is to try again
                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault
                     handler:^(UIAlertAction * action) {
                         [self fetchMovies];
@@ -66,25 +69,21 @@
                [alert addAction:defaultAction];
                [self presentViewController:alert animated:YES completion:nil];
                
-               NSLog(@"%@", [error localizedDescription]);
            }
            else {
+//               no connection error
                [self.activityIndicator stopAnimating];
+               
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
 
-               
-               // TODO: Get the array of movies
-               // TODO: Store the movies in a property to use elsewhere
-               // TODO: Reload your table view data
-               // NSLog(@"%@", dataDictionary);// log an object with the %@ formatter.
+               // Assign the movie results to the  movieArray property
                self.movieArray = dataDictionary[@"results"];
-//               for (id movie in self.movieArray) {
-//                   NSLog(@"%@", movie);
-//               }
+               // Reload the data in casa it hasnt come in yet
                [self.tableView reloadData];
                
            }
         
+//        end refresh control
         [self.refreshControl endRefreshing];
         
         
@@ -99,23 +98,29 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:
     (NSInteger)section{
+//    return amount of movies in the movieArray
         return self.movieArray.count;
     }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:
     (NSIndexPath *)indexPath{
+//    initialize cell (MovieCell) to a reusable cell using the MovieCell identifier
     MovieCell *cell = [tableView
     dequeueReusableCellWithIdentifier: @"MovieCell"];
     
+//    get the movie and assign title and overview to cell accordingly
     NSDictionary *movie = self.movieArray[indexPath.row];
     cell.titleLabel.text = movie[@"title"];
     cell.synopsisLabel.text=movie[@"overview"];
     
+//    get the url of the poster image
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     NSString *posterURLString = movie[@"poster_path"];
     NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
     
     NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+    
+//    assign the poser image to the cell
     cell.posterView.image=nil;
     [cell.posterView setImageWithURL:posterURL];
     
@@ -128,14 +133,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
-    
-    NSLog(@"%@", sender);
     NSIndexPath *myIndexPath=self.tableView.indexPathForSelectedRow;
 
     NSDictionary *dataToPass = self.movieArray[myIndexPath.row];
     DetailsViewController *detailVC = [segue destinationViewController];
-    //detailVC.detailDict = dataToPass;
     detailVC.detailDict = dataToPass;
 }
 

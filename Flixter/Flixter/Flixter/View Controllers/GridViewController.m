@@ -19,9 +19,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // Assigning delegate and dataSource elements for the CollectionView to self
     self.collectionView.dataSource = self;
     self.collectionView.delegate=self;
+    
+//    Get all the movies
     [self fetchMovies];
     
 }
@@ -40,20 +42,16 @@
     // 4 - create our session task
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
            if (error != nil) {
+//               in case of connection error
                NSLog(@"%@", [error localizedDescription]);
            }
            else {
+//               no connection error
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
 
-               
-               // TODO: Get the array of movies
-               // TODO: Store the movies in a property to use elsewhere
-               // TODO: Reload your table view data
-               // NSLog(@"%@", dataDictionary);// log an object with the %@ formatter.
+//               Assign the movie results to the  movieArray property
                self.movieArray = dataDictionary[@"results"];
-//               for (id movie in self.movieArray) {
-//                   NSLog(@"%@", movie);
-//               }
+//               Reload the data in casa it hasnt come in yet
                [self.collectionView reloadData];
                
            }
@@ -67,15 +65,18 @@
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+//    return number of movies in array
     return self.movieArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
+//    Initialize cell to an instance of a PosterCell using the identifier of the posterImageCell
     PosterCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"posterImageCell" forIndexPath:indexPath];
     
     NSDictionary *movie = self.movieArray[indexPath.row];
 
+//    Get the url of the poster and set it to the cell image
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
 
     NSString *posterURLString = movie[@"poster_path"];
