@@ -51,9 +51,9 @@
                // TODO: Reload your table view data
                // NSLog(@"%@", dataDictionary);// log an object with the %@ formatter.
                self.movieArray = dataDictionary[@"results"];
-               for (id movie in self.movieArray) {
-                   NSLog(@"%@", movie);
-               }
+//               for (id movie in self.movieArray) {
+//                   NSLog(@"%@", movie);
+//               }
                [self.collectionView reloadData];
                
            }
